@@ -80,10 +80,10 @@ Log 'Installing new packages'
 runner \
   apt-get dist-upgrade -y --force-yes
 heading='true' Log 'Desktop Environment'
+Log 'Installing Packages'
 runner \
   apt-get install -y --force-yes \
     xserver-xorg-core \
-    gdm3 \
     awesome \
     awesome-extra
 heading='true' Log 'Terminal Environment'
