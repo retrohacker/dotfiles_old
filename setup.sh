@@ -82,7 +82,7 @@ heading='true' Log 'Desktop Environment'
 Log 'Installing Packages'
 runner \
   apt-get install -y --force-yes \
-    xserver-xorg-core \
+    xorg \
     awesome \
     awesome-extra
 heading='true' Log 'Terminal Environment'
