@@ -53,14 +53,14 @@ Log.AddOutput setup_script STATUS
 
 heading='true' Log 'Updating System'
 Log 'Including non-free packages'
-if [ -d /etc/apt/sources.list.d ]; then
-  NONFREE=$(cat /etc/apt/sources.list /etc/apt/sources.list.d/* | grep -v '^#' | grep 'deb.*main.*contrib.*non-free')
-else
-  NONFREE=$(cat /etc/apt/sources.list | grep -v '^#' | grep 'deb.*main.*contrib.*non-free')
-fi
+# Don't error when sources.list.d is empty
+set -s nullglob
+NONFREE=$(cat /etc/apt/sources.list /etc/apt/sources.list.d/* | grep -v '^#' | grep 'deb.*main.*contrib.*non-free')
+set -u nullglob
 if [ -z "$NONFREE" ]; then
+  # quoted to ensure >> gets run inside of runner
   runner \
-  echo "deb http://httpredir.debian.org/debian/ testing main contrib non-free" >> /etc/apt/sources.list
+    "echo 'deb http://httpredir.debian.org/debian/ testing main contrib non-free' >> /etc/apt/sources.list"
 else
   runner \
   echo "non-free repo installed, skipping step"
