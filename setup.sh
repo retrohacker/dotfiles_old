@@ -111,4 +111,7 @@ runner \
   ln -s $DIR/vim $HOMEDIR/.vim
 Log 'Moving .Xresources into place'
 runner \
-  ln -s $DIR/xterm/.Xresources ~/.Xresources
+  ln -s $DIR/xterm/.Xresources $HOMEDIR/.Xresources
+Log 'Moving .xinitrc into place'
+runner \
+  ln -s $DIR/xterm/.xinitrc $HOMEDIR/.xinitrc
