@@ -54,9 +54,9 @@ Log.AddOutput setup_script STATUS
 heading='true' Log 'Updating System'
 Log 'Including non-free packages'
 # Don't error when sources.list.d is empty
-set -s nullglob
+shopt -s nullglob
 NONFREE=$(cat /etc/apt/sources.list /etc/apt/sources.list.d/* | grep -v '^#' | grep 'deb.*main.*contrib.*non-free')
-set -u nullglob
+shopt -u nullglob
 if [ -z "$NONFREE" ]; then
   # quoted to ensure >> gets run inside of runner
   runner \
