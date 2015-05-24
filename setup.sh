@@ -74,10 +74,10 @@ runner \
   apt-get update
 Log 'Downloading new packages'
 runner \
-  apt-get --download-only -y --force-yes dist-upgrade
+  DEBIAN_FRONTEND=noninteractive apt-get --download-only -y --force-yes dist-upgrade
 Log 'Installing new packages'
 runner \
-  apt-get dist-upgrade -y --force-yes
+  DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y --force-yes
 heading='true' Log 'Desktop Environment'
 Log 'Installing Packages'
 runner \
