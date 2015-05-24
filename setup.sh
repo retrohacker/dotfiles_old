@@ -66,6 +66,13 @@ apt-get update
 Log 'Installing new packages'
 runner \
 apt-get upgrade -y --force-yes
+heading='true' Log 'Desktop Environment'
+runner \
+apt-get install -y --force-yes \
+  xserver-xorg-core \
+  gdm3 \
+  awesome \
+  awesome-extra
 heading='true' Log 'Terminal Environment'
 Log 'Installing zsh'
 runner \
