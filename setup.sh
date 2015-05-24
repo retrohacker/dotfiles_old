@@ -68,8 +68,7 @@ fi
 Log 'Migrating to testing'
 runner \
   cp /etc/apt/sources.list /etc/apt/sources.list.bak
-runner \
-  sed -i -e 's/\ \(stable\|wheezy\|jessie\)/\ testing/g' /etc/apt/sources.list
+sed -i -e 's/\ \(stable\|wheezy\|jessie\)/\ testing/g' /etc/apt/sources.list
 Log 'Updating apt-get'
 runner \
   apt-get update
