@@ -26,7 +26,7 @@ HOMEDIR=$(eval echo ~$USERNAME)
 
 source "$DIR/infinity/lib/oo-framework.sh"
 
-# Setup Functions
+# Useful Functions
 
 logger() {
   if [ -z "$heading" ]; then
@@ -51,34 +51,43 @@ Log.AddOutput setup_script STATUS
 
 # Run Setup
 
-heading='true' Log 'Getting apt up-to-date'
+heading='true' Log 'Updating System'
 Log 'Including non-free packages'
-NONFREE=$(cat /etc/apt/sources.list /etc/apt/sources.list.d/* | grep -v '^#' | grep 'deb.*jessie.*main.*contrib.*non-free')
+NONFREE=$(cat /etc/apt/sources.list /etc/apt/sources.list.d/* | grep -v '^#' | grep 'deb.*main.*contrib.*non-free')
 if [ -z "$NONFREE" ]; then
   runner \
-  echo "deb http://httpredir.debian.org/debian/ jessie main contrib non-free" >> /etc/apt/sources.list
+  echo "deb http://httpredir.debian.org/debian/ testing main contrib non-free" >> /etc/apt/sources.list
 else
+  runner \
   echo "non-free repo installed, skipping step"
 fi
+Log 'Migrating to testing'
+runner \
+  cp /etc/apt/sources.list /etc/sources.list.bak
+runner \
+  sed -i -e 's/\ \(stable\|wheezy\|jessie\)/\ testing/g' /etc/apt/sources.list
 Log 'Updating apt-get'
 runner \
-apt-get update
+  apt-get update
+Log 'Downloading new packages'
+runner \
+  apt-get --download-only -y --force-yes dist-upgrade
 Log 'Installing new packages'
 runner \
-apt-get upgrade -y --force-yes
+  apt-get dist-upgrade -y --force-yes
 heading='true' Log 'Desktop Environment'
 runner \
-apt-get install -y --force-yes \
-  xserver-xorg-core \
-  gdm3 \
-  awesome \
-  awesome-extra
+  apt-get install -y --force-yes \
+    xserver-xorg-core \
+    gdm3 \
+    awesome \
+    awesome-extra
 heading='true' Log 'Terminal Environment'
 Log 'Installing zsh'
 runner \
-apt-get install -y --force-yes \
-  fonts-powerline \
-  zsh
+  apt-get install -y --force-yes \
+    fonts-powerline \
+    zsh
 Log 'Setting zsh as default shell'
 runner \
   cat /etc/passwd
@@ -88,12 +97,12 @@ runner \
   cat /etc/passwd
 Log 'Moving zsh dotfiles into place'
 runner \
-ln -s ./zsh $HOMEDIR/.zsh
+  ln -s ./zsh $HOMEDIR/.zsh
 Log 'Installing vim'
 runner \
-apt-get install -y --force-yes \
-  fonts-powerline \
-  vim
+  apt-get install -y --force-yes \
+    fonts-powerline \
+    vim
 Log 'Moving vim dotfiles into place'
 runner \
-ln -s ./vim $HOMEDIR/.vim
+  ln -s ./vim $HOMEDIR/.vim
