@@ -1,3 +1,9 @@
 [submodule "infinity"]
 	path = infinity
 	url = https://github.com/niieani/bash-oo-framework.git
+[submodule "zsh"]
+	path = zsh
+	url = https://github.com/wblankenship/zsh
+[submodule "vim"]
+	path = vim
+	url = https://github.com/wblankenship/vim.git
