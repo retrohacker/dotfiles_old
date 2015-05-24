@@ -100,7 +100,7 @@ runner \
   cat /etc/passwd
 Log 'Moving zsh dotfiles into place'
 runner \
-  ln -s ./zsh $HOMEDIR/.zsh
+  ln -s $DIR/zsh $HOMEDIR/.zsh
 Log 'Installing vim'
 runner \
   apt-get install -y --force-yes \
@@ -108,4 +108,7 @@ runner \
     vim
 Log 'Moving vim dotfiles into place'
 runner \
-  ln -s ./vim $HOMEDIR/.vim
+  ln -s $DIR/vim $HOMEDIR/.vim
+Log 'Moving .Xresources into place'
+runner \
+  ln -s $DIR/xterm/.Xresources ~/.Xresources

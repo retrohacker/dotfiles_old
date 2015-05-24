@@ -7,3 +7,6 @@
 [submodule "vim"]
 	path = vim
 	url = https://github.com/wblankenship/vim.git
+[submodule "xterm"]
+	path = xterm
+	url = https://github.com/wblankenship/xterm.git
