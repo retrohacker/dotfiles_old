@@ -127,3 +127,28 @@ runner \
 Log 'Moving .xinitrc into place'
 runner \
   ln -s $DIR/xterm/.xinitrc $HOMEDIR/.xinitrc
+heading=true Log 'Installing User Programs'
+Log 'Installing image editors'
+runner \
+  apt-get install -y --force-yes \
+    gimp \
+    gimp-plugin-registry \
+    inkscape
+Log 'Installing 3D Programs'
+runner \
+  apt-get install -y --force-yes \
+    freecad \
+    blender
+Log 'Installing Media Programs'
+runner \
+  apt-get install -y --force-yes \
+    digikam \
+    ksnapshot \
+    vlc
+Log 'Installing Web Browser'
+runner \
+  apt-get install -y --force-yes \
+    gdebi
+runner \
+  gdebi -n \
+    $DIR/chrome/google_chrome.deb
