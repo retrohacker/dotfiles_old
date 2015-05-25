@@ -82,6 +82,14 @@ runner \
     consolekit \
     awesome \
     awesome-extra
+heading='true' Log 'Setting up hardware'
+Log 'Installing wireless drivers'
+runner \
+  apt-get apt-get install -y --force-yes \
+    firmware-iwlwifi
+runner \
+  modprobe -r iwlwifi; \
+  modprobe iwlwifi
 heading='true' Log 'Terminal Environment'
 Log 'Installing zsh'
 runner \
