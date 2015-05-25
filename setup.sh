@@ -79,6 +79,7 @@ Log 'Installing Packages'
 runner \
   apt-get install -y --force-yes \
     xorg \
+    consolekit \
     awesome \
     awesome-extra
 heading='true' Log 'Terminal Environment'
@@ -96,6 +97,8 @@ runner \
 Log 'Moving zsh dotfiles into place'
 runner \
   ln -s $DIR/zsh $HOMEDIR/.zsh
+runner \
+  ln $DIR/zsh/.zshrc $HOMEDIR/.zshrc
 Log 'Installing vim'
 runner \
   apt-get install -y --force-yes \
@@ -104,6 +107,8 @@ runner \
 Log 'Moving vim dotfiles into place'
 runner \
   ln -s $DIR/vim $HOMEDIR/.vim
+runner \
+  ln $DIR/vim/.vimrc $HOMEDIR/.vimrc
 Log 'Moving .Xresources into place'
 runner \
   ln -s $DIR/xterm/.Xresources $HOMEDIR/.Xresources
