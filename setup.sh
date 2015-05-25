@@ -60,24 +60,20 @@ shopt -u nullglob
 if [ -z "$NONFREE" ]; then
   # quoted to ensure >> gets run inside of runner
   runner \
-    "echo 'deb http://httpredir.debian.org/debian/ testing main contrib non-free' >> /etc/apt/sources.list"
+    "echo 'deb http://httpredir.debian.org/debian/ jessie main contrib non-free' >> /etc/apt/sources.list"
 else
   runner \
   echo "non-free repo installed, skipping step"
 fi
-Log 'Migrating to testing'
-runner \
-  cp /etc/apt/sources.list /etc/apt/sources.list.bak
-sed -i -e 's/\ \(stable\|wheezy\|jessie\)/\ testing/g' /etc/apt/sources.list
 Log 'Updating apt-get'
 runner \
   apt-get update
 Log 'Downloading new packages'
 runner \
-  DEBIAN_FRONTEND=noninteractive apt-get --download-only -y --force-yes dist-upgrade
+  DEBIAN_FRONTEND=noninteractive apt-get --download-only -y --force-yes upgrade
 Log 'Installing new packages'
 runner \
-  DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y --force-yes
+  DEBIAN_FRONTEND=noninteractive apt-get -y --force-yes upgrade
 heading='true' Log 'Desktop Environment'
 Log 'Installing Packages'
 runner \
