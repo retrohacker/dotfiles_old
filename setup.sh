@@ -85,11 +85,15 @@ runner \
 heading='true' Log 'Setting up hardware'
 Log 'Installing wireless drivers'
 runner \
-  apt-get apt-get install -y --force-yes \
+  apt-get install -y --force-yes \
     firmware-iwlwifi
 runner \
   modprobe -r iwlwifi; \
   modprobe iwlwifi
+Log 'Installing wicd wireless manager'
+runner \
+  apt-get install -y --force-yes \
+    wicd
 heading='true' Log 'Terminal Environment'
 Log 'Installing zsh'
 runner \
