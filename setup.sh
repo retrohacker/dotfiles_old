@@ -103,7 +103,7 @@ runner \
 Log 'Setting zsh as default shell'
 runner \
   cat /etc/passwd
-sed -i.bak 's!/bin/bash/!'$(which zsh)'!' /etc/passwd
+sed -i.bak 's!/bin/bash!'$(which zsh)'!' /etc/passwd
 runner \
   cat /etc/passwd
 Log 'Moving zsh dotfiles into place'
