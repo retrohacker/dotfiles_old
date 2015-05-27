@@ -94,6 +94,10 @@ Log 'Installing wicd wireless manager'
 runner \
   apt-get install -y --force-yes \
     wicd
+Log 'Installing backlight manager'
+runner \
+  apt-get install -y --force-yes \
+    xbacklight
 heading='true' Log 'Terminal Environment'
 Log 'Installing zsh'
 runner \
@@ -111,11 +115,12 @@ runner \
   ln -s $DIR/zsh $HOMEDIR/.zsh
 runner \
   ln $DIR/zsh/.zshrc $HOMEDIR/.zshrc
-Log 'Installing vim'
+Log 'Installing Text Editors'
 runner \
   apt-get install -y --force-yes \
     fonts-powerline \
-    vim
+    vim \
+    gedit
 Log 'Moving vim dotfiles into place'
 runner \
   ln -s $DIR/vim $HOMEDIR/.vim
@@ -152,3 +157,30 @@ runner \
 runner \
   gdebi -n \
     $DIR/chrome/google_chrome.deb
+Log 'Installing Dropbox'
+runner \
+  apt-get install -y --force-yes \
+    python-gpgme
+runner \
+  gdebi -n \
+    $DIR/dropbox/dropbox.deb
+Log 'Installing docker'
+runner \
+  curl -sSL https://get.docker.com/ | sh
+runner \
+  groupadd docker
+runner \
+  gpasswd -a $USERNAME docker
+runner \
+  service docker restart
+Log 'Installing Virtualbox'
+runner \
+  apt-get install -y --force-yes \
+    linux-headers-$(uname -r|sed 's,[^-]*-[^-]*-,,') \
+    virtualbox
+Log 'Installing iojs'
+runner \
+  "curl -sL https://deb.nodesource.com/setup_iojs_2.x | sudo bash -"
+runner \
+  apt-get install -y --force-yes \
+    iojs
