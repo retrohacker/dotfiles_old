@@ -22,6 +22,10 @@ DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 USERNAME=$(who am i | awk '{print $1}')
 HOMEDIR=$(eval echo ~$USERNAME)
 
+# Get list of users that can log in
+
+USERS=$(exec $DIR/users.sh | grep "^user:" | awk -F":" '{ print $2 }')
+
 # Import Dependencies
 
 source "$DIR/infinity/lib/oo-framework.sh"
@@ -98,6 +102,23 @@ Log 'Installing backlight manager'
 runner \
   apt-get install -y --force-yes \
     xbacklight
+Log 'Setting up audio'
+runner \
+  apt-get install -y --force-yes \
+    libasound2 \
+    libasound2-doc \
+    alsa-base \
+    alsa-utils \
+    alsa-oss
+Log 'Adding users to audio group'
+for u in $USERS; do
+  runner \
+    id $u
+  runner \
+    usermod -aG audio $u
+  runner \
+    id $u
+done
 heading='true' Log 'Terminal Environment'
 Log 'Installing zsh'
 runner \
@@ -105,11 +126,14 @@ runner \
     fonts-powerline \
     zsh
 Log 'Setting zsh as default shell'
-runner \
-  cat /etc/passwd
-sed -i.bak 's!/bin/bash!'$(which zsh)'!' /etc/passwd
-runner \
-  cat /etc/passwd
+for u in $USERS; do
+  runner \
+    grep "^$u" /etc/passwd
+  runner \
+    chsh -s $(which zsh) $u
+  runner \
+    grep "^$u" /etc/passwd
+done
 Log 'Moving zsh dotfiles into place'
 runner \
   ln -s $DIR/zsh $HOMEDIR/.zsh
@@ -183,4 +207,9 @@ runner \
   "curl -sL https://deb.nodesource.com/setup_iojs_2.x | sudo bash -"
 runner \
   apt-get install -y --force-yes \
-    iojs
+    iojs \
+    build-essential
+Log 'Installing postgresl client'
+runner \
+  apt-get install -y --force-yes \
+    postgresql-client
