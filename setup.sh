@@ -120,6 +120,10 @@ for u in $USERS; do
     id $u
 done
 heading='true' Log 'Terminal Environment'
+Log 'Installing htop'
+runner \
+  apt-get install -y --force-yes \
+    htop
 Log 'Installing zsh'
 runner \
   apt-get install -y --force-yes \
