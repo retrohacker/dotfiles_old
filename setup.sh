@@ -119,6 +119,9 @@ for u in $USERS; do
   runner \
     id $u
 done
+Log 'Moving asoundrc into place'
+  runner \
+    ln $DIR/xterm/.asoundrc $HOME/.asoundrc
 heading='true' Log 'Terminal Environment'
 Log 'Installing htop'
 runner \
