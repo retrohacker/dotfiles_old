@@ -221,7 +221,7 @@ runner \
   "curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.25.4/install.sh | bash"
 Log 'Installing webserver'
 runner \
-  npm install -g webserver
+  npm install -g local-web-server
 Log 'Installing postgresl client'
 runner \
   apt-get install -y --force-yes \
