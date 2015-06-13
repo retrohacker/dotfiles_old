@@ -216,6 +216,12 @@ runner \
   apt-get install -y --force-yes \
     iojs \
     build-essential
+Log 'Installing nvm'
+runner \
+  "curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.25.4/install.sh | bash"
+Log 'Installing webserver'
+runner \
+  npm install -g webserver
 Log 'Installing postgresl client'
 runner \
   apt-get install -y --force-yes \
