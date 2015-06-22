@@ -226,3 +226,15 @@ Log 'Installing postgresl client'
 runner \
   apt-get install -y --force-yes \
     postgresql-client
+Log 'Installing Ansible'
+runner \
+  git clone git://github.com/ansible/ansible.git --recursive
+runner \
+  apt-get install -y --force-yes \
+    python-setuptools
+runner \
+  easy_install pip
+runner \
+  pip install paramiko PyYAML Jinja2 httplib2
+runner \
+  "cd ansible && make install"
