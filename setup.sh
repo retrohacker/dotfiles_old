@@ -26,13 +26,9 @@ HOMEDIR=$(eval echo ~$USERNAME)
 
 USERS=$(exec $DIR/users.sh | grep "^user:" | awk -F":" '{ print $2 }')
 
-# Import Dependencies
-
-source "$DIR/infinity/lib/oo-framework.sh"
-
 # Useful Functions
 
-logger() {
+Log() {
   if [ -z "$heading" ]; then
     echo "# $*"
   else
@@ -46,12 +42,6 @@ runner() {
   bash -c "$*"
   echo "\`\`\`"
 }
-
-# Setup Logging
-
-namespace setup_script
-Log.RegisterLogger STATUS logger
-Log.AddOutput setup_script STATUS
 
 # Run Setup
 
@@ -187,7 +177,7 @@ runner \
     gdebi
 runner \
   gdebi -n \
-    $DIR/chrome/google_chrome.deb
+    $DIR/debs/google_chrome.deb
 Log 'Installing Dropbox'
 runner \
   apt-get install -y --force-yes \
@@ -238,3 +228,6 @@ runner \
   pip install paramiko PyYAML Jinja2 httplib2
 runner \
   "cd ansible && make install"
+Log 'Installing Anki'
+runner \
+  gdebi -n $DIR/debs/anki.deb
